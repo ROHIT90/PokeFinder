@@ -34,18 +34,99 @@
                                     <action selector="spotRandomPokemon:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gXW-uq-okt"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UbH-mU-J6U">
+                                <subviews>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8xy-S3-W7F">
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="605" id="epJ-Y6-wFp"/>
+                                            <constraint firstAttribute="width" constant="335" id="pg8-pq-aS2"/>
+                                        </constraints>
+                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bfS-pc-nUS">
+                                            <size key="itemSize" width="50" height="50"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="JxA-XS-AyK" customClass="PokeCollectionViewCell" customModule="PokeFinder" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LIk-e3-DD3">
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="21" id="1Qq-aU-jEp"/>
+                                                                <constraint firstAttribute="width" constant="42" id="bIb-je-j7I"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </view>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="LIk-e3-DD3" secondAttribute="bottom" constant="14" id="5LD-OC-HdC"/>
+                                                    <constraint firstAttribute="trailing" secondItem="LIk-e3-DD3" secondAttribute="trailing" constant="4" id="6ha-yI-Z20"/>
+                                                    <constraint firstItem="LIk-e3-DD3" firstAttribute="leading" secondItem="JxA-XS-AyK" secondAttribute="leading" constant="4" id="B1q-Sb-kna"/>
+                                                    <constraint firstItem="LIk-e3-DD3" firstAttribute="top" secondItem="JxA-XS-AyK" secondAttribute="top" constant="15" id="ltq-Ts-u66"/>
+                                                </constraints>
+                                                <connections>
+                                                    <outlet property="myLabel" destination="LIk-e3-DD3" id="FGD-xh-s5d"/>
+                                                </connections>
+                                            </collectionViewCell>
+                                        </cells>
+                                        <connections>
+                                            <outlet property="dataSource" destination="BYZ-38-t0r" id="tyF-wC-rBt"/>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="yA1-fI-FTN"/>
+                                            <outlet property="prefetchDataSource" destination="BYZ-38-t0r" id="mMT-l2-1f5"/>
+                                        </connections>
+                                    </collectionView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2YS-rw-eC4">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="34" id="Hze-Nc-Yt5"/>
+                                            <constraint firstAttribute="width" constant="335" id="PY2-ot-eDJ"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="collectionViewAddButton_TouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="69t-Hk-bNN"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="2YS-rw-eC4" secondAttribute="trailing" constant="20" id="4nO-9v-FH0"/>
+                                    <constraint firstAttribute="height" constant="667" id="4oR-3c-Wh7"/>
+                                    <constraint firstItem="8xy-S3-W7F" firstAttribute="top" secondItem="UbH-mU-J6U" secondAttribute="top" constant="20" id="BJi-Wb-o9u"/>
+                                    <constraint firstAttribute="width" constant="375" id="MPI-00-ofo"/>
+                                    <constraint firstItem="8xy-S3-W7F" firstAttribute="leading" secondItem="UbH-mU-J6U" secondAttribute="leading" constant="20" id="OS5-68-MLt"/>
+                                    <constraint firstAttribute="trailing" secondItem="8xy-S3-W7F" secondAttribute="trailing" constant="20" id="RNY-Ow-Nxe"/>
+                                    <constraint firstAttribute="bottom" secondItem="8xy-S3-W7F" secondAttribute="bottom" constant="42" id="T8f-sC-IK5"/>
+                                    <constraint firstItem="2YS-rw-eC4" firstAttribute="leading" secondItem="UbH-mU-J6U" secondAttribute="leading" constant="20" id="iBx-AN-sCJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="2YS-rw-eC4" secondAttribute="bottom" id="sO1-sK-pmE"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Bnx-5k-Hit" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="5zW-WM-1sI"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Bnx-5k-Hit" secondAttribute="bottom" id="CEF-6I-q7d"/>
                             <constraint firstItem="MsB-9B-WFa" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="Duu-d4-7By"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="UbH-mU-J6U" secondAttribute="bottom" id="Ggj-IH-Dj9"/>
                             <constraint firstItem="Bnx-5k-Hit" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="JqA-O4-3sE"/>
+                            <constraint firstItem="UbH-mU-J6U" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="LVz-rp-8q6"/>
+                            <constraint firstItem="UbH-mU-J6U" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="YFr-i5-160"/>
                             <constraint firstAttribute="trailing" secondItem="Bnx-5k-Hit" secondAttribute="trailing" id="dU1-Es-1Gc"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="MsB-9B-WFa" secondAttribute="bottom" constant="20" id="e0m-q8-Uo9"/>
+                            <constraint firstAttribute="trailing" secondItem="UbH-mU-J6U" secondAttribute="trailing" id="re6-kc-hM8"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="collectioViewAddButton" destination="2YS-rw-eC4" id="K9b-7k-30z"/>
+                        <outlet property="collectionView" destination="8xy-S3-W7F" id="5QX-6B-EHc"/>
+                        <outlet property="collectionViewBackground" destination="UbH-mU-J6U" id="Yf6-l1-snr"/>
                         <outlet property="mapView" destination="Bnx-5k-Hit" id="o4m-Zk-odr"/>
                     </connections>
                 </viewController>

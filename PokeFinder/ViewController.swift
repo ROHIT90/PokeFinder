@@ -10,11 +10,20 @@ import UIKit
 import MapKit
 import FirebaseDatabase
 
-class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate
-
+class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate
+    
 {
-
+    
+    let reuseIdentifier = "cell" // also enter this string as the cell identifier in the storyboard
+    
+    var pokeNameClass: PokeNames = PokeNames() //Create object of ParseJson
+    
+    var pokeNames: NSArray = NSArray()
+    
+    @IBOutlet weak var collectionViewBackground: UIView!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectioViewAddButton: UIButton!
     
     var mapHasCneteredOnce = false
     var geoFire: GeoFire!
@@ -31,6 +40,12 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         
         geoFireRef = FIRDatabase.database().reference()
         geoFire = GeoFire(firebaseRef: geoFireRef)
+        
+        collectionViewBackground.isHidden = true
+        collectionViewBackground?.backgroundColor = UIColor(white:1, alpha:0.5)
+        collectionView?.backgroundColor = UIColor(white:1,alpha:0)
+        collectionView.allowsMultipleSelection = true
+        collectionView.delaysContentTouches = true
     }
     
     override func viewDidAppear(_ animated: Bool)
@@ -38,6 +53,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         locationAuthStatus()
     }
 
+    
     func locationAuthStatus()
     {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
@@ -79,7 +95,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             annotationView?.image = UIImage(named: "ash")
         } else if let deqAnno = mapView.dequeueReusableAnnotationView(withIdentifier: annoIdentifier) {
             annotationView = deqAnno
-        annotationView?.annotation = annotation
+            annotationView?.annotation = annotation
         } else {
             let av = MKAnnotationView(annotation: annotation, reuseIdentifier: annoIdentifier)
             av.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
@@ -141,16 +157,88 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             let options = [MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center), MKLaunchOptionsMapSpanKey:  NSValue(mkCoordinateSpan: regionSpan.span), MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving] as [String : Any]
             
             MKMapItem.openMaps(with: [destination], launchOptions: options)
-
+            
         }
     }
     
     @IBAction func spotRandomPokemon(_ sender: AnyObject)
     {
+        collectionView .reloadData()
+        collectionViewBackground.isHidden = false
+
+        pokeNames = pokeNameClass.pokemon as NSArray
+
+
+        
+       /* let loc = CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
+        let rand = arc4random_uniform(151) + 1
+        createSighting(forLocation: loc, withPokemon: Int(rand))*/
+    }
+    
+    @IBAction func collectionViewAddButton_TouchUpInside(_ sender: AnyObject)
+    {
+        collectionViewBackground.isHidden = true
+
+    }
+    
+    // MARK: - UICollectionViewDataSource protocol
+    
+    // tell the collection view how many cells to make
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+    {
+        pokeNames = pokeNameClass.pokemon as NSArray
+        return self.pokeNames.count
+    }
+    
+    // make a cell for each cell index path
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    {
+
+        // get a reference to our storyboard cell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! PokeCollectionViewCell
+        
+        // Use the outlet in our custom class to get a reference to the UILabel in the cell
+        pokeNames = pokeNameClass.pokemon as NSArray
+        
+        cell.myLabel.text = self.pokeNames[indexPath.item] as? String
+        cell.backgroundColor = UIColor.cyan // make cell more visible in our example project
+        cell.layer.borderColor = UIColor.black.cgColor
+        cell.layer.borderWidth = 1
+        cell.layer.cornerRadius = 24
+        
+        return cell
+    }
+    
+    // change background color when user touches cell
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath)
+    {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.backgroundColor = UIColor.red
+    }
+    
+    // change background color back when user releases touch
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath)
+    {
+       // let cell = collectionView.cellForItem(at: indexPath)
+        //cell?.backgroundColor = UIColor.cyan
+    }
+    
+    // MARK: - UICollectionViewDelegate protocol
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    {
+        // handle tap events
         let loc = CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
         let rand = arc4random_uniform(151) + 1
         createSighting(forLocation: loc, withPokemon: Int(rand))
-    }
+      /*  let cell = collectionView.cellForItem(at: indexPath)
+        
+        let indexPath = self.collectionView!.indexPath(for: cell!)
+        print("You selected cell #\(indexPath)!")
+        print(pokeNames[(indexPath?.row)!])*/
 
+}
+    
+    
 }
 
